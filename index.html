@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--
+  index.html : 홈페이지의 "뼈대"를 담당하는 파일입니다.
+  HTML은 화면에 어떤 내용(글, 사진, 버튼)이 들어갈지를 정합니다.
+  꾸미는 것(색, 크기, 배치)은 css/style.css 가 담당해요.
+-->
+<html lang="ko">
+<head>
+  <!-- 문자 인코딩: 한글이 깨지지 않게 하는 설정 -->
+  <meta charset="UTF-8" />
+  <!-- 모바일 화면에서도 잘 보이게 하는 설정 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 브라우저 탭에 표시되는 제목 -->
+  <title>Runa Cafe | 루나 카페</title>
+  <!-- 꾸미기 담당인 CSS 파일을 연결 -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== 상단 메뉴바 (네비게이션) ===== -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="#home" class="logo">🌙 Runa Cafe</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home">홈</a></li>
+          <li><a href="#menu">메뉴</a></li>
+          <li><a href="#about">소개</a></li>
+          <li><a href="#location">오시는 길</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== 첫 화면 (히어로 섹션) ===== -->
+  <section id="home" class="hero">
+    <h1>Runa Cafe</h1>
+    <p>달빛처럼 은은한 하루의 쉼표, 루나 카페</p>
+    <a href="#menu" class="btn">메뉴 보러가기</a>
+  </section>
+
+  <!-- ===== 메뉴 섹션 ===== -->
+  <section id="menu" class="section">
+    <h2>메뉴</h2>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <span class="menu-emoji">☕</span>
+        <h3>아메리카노</h3>
+        <p>깊고 진한 스페셜티 원두</p>
+        <span class="price">4,000원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🥛</span>
+        <h3>카페라떼</h3>
+        <p>부드러운 우유와 에스프레소</p>
+        <span class="price">4,500원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🍰</span>
+        <h3>수제 케이크</h3>
+        <p>매일 아침 직접 굽는 디저트</p>
+        <span class="price">6,000원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🍵</span>
+        <h3>말차라떼</h3>
+        <p>고소하고 진한 프리미엄 말차</p>
+        <span class="price">5,000원</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 소개 섹션 ===== -->
+  <section id="about" class="section section-alt">
+    <h2>카페 소개</h2>
+    <p class="about-text">
+      루나 카페는 조용히 쉬어가고 싶은 분들을 위한 공간입니다.<br />
+      정성껏 내린 커피 한 잔과 함께 여유로운 시간을 보내세요.
+    </p>
+  </section>
+
+  <!-- ===== 오시는 길 섹션 ===== -->
+  <section id="location" class="section">
+    <h2>오시는 길</h2>
+    <div class="info-box">
+      <p>📍 주소 : 서울시 ○○구 ○○로 123 (여기를 실제 주소로 바꿔보세요!)</p>
+      <p>🕐 영업시간 : 매일 10:00 ~ 22:00</p>
+      <p>📞 전화 : 02-1234-5678</p>
+    </div>
+  </section>
+
+  <!-- ===== 하단 (푸터) ===== -->
+  <footer class="footer">
+    <p>© 2026 Runa Cafe. All rights reserved.</p>
+  </footer>
+
+  <!-- 동작(인터랙션) 담당인 JavaScript 파일을 연결 -->
+  <script src="js/script.js"></script>
+</body>
+</html>
