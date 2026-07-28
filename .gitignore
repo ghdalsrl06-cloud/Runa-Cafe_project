@@ -1,0 +1,17 @@
+# .gitignore : GitHub에 올리면 안 되는 파일을 지정하는 설정 파일입니다.
+# 여기 적힌 파일/폴더는 git이 무시합니다.
+
+# 운영체제가 자동으로 만드는 파일
+.DS_Store
+Thumbs.db
+
+# 비밀 정보 (API 키, 비밀번호 등은 절대 GitHub에 올리면 안 돼요!)
+.env
+*.key
+
+# 에디터 설정 파일
+.vscode/
+.idea/
+
+# 나중에 Node.js를 쓰게 되면 필요한 항목
+node_modules/
