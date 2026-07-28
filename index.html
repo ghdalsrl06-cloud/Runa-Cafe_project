@@ -27,6 +27,7 @@
         <ul class="nav-links">
           <li><a href="#home">홈</a></li>
           <li><a href="#menu">메뉴</a></li>
+          <li><a href="#reserve">예약·주문</a></li>
           <li><a href="#about">소개</a></li>
           <li><a href="#location">오시는 길</a></li>
         </ul>
@@ -152,8 +153,61 @@
     </div>
   </section>
 
+  <!-- ===== 예약 · 주문 섹션 ===== -->
+  <section id="reserve" class="section section-alt">
+    <h2>예약 · 주문</h2>
+    <p class="demo-notice">
+      🛠️ 지금은 연습용(데모) 기능이에요. 입력한 내용은 서버가 아니라
+      <strong>지금 보고 있는 브라우저에만</strong> 저장됩니다.
+      실제 접수 기능은 개업 준비와 함께 연결할 예정이에요.
+    </p>
+
+    <div class="reserve-grid">
+      <!-- 픽업 주문 : 메뉴에서 "담기"를 누르면 아래 장바구니에 쌓임 -->
+      <div class="panel">
+        <h3>🛍️ 픽업 주문</h3>
+        <p class="panel-desc">위 메뉴에서 <strong>담기</strong> 버튼을 누르면 여기에 담겨요.</p>
+        <ul id="cart-list"></ul>
+        <p id="cart-total" class="cart-total"></p>
+        <form id="order-form">
+          <input type="text" id="order-name" placeholder="이름" required />
+          <input type="tel" id="order-phone" placeholder="연락처 (010-0000-0000)" required />
+          <label for="order-time">픽업 시간</label>
+          <input type="time" id="order-time" min="11:00" max="22:30" required />
+          <button type="submit" class="btn form-btn">주문하기</button>
+        </form>
+        <p id="order-message" class="form-message" hidden></p>
+      </div>
+
+      <!-- 좌석 예약 -->
+      <div class="panel">
+        <h3>🪑 좌석 예약</h3>
+        <p class="panel-desc">원하는 날짜와 시간에 자리를 맡아드려요.</p>
+        <form id="reserve-form">
+          <input type="text" id="reserve-name" placeholder="이름" required />
+          <input type="tel" id="reserve-phone" placeholder="연락처 (010-0000-0000)" required />
+          <label for="reserve-date">날짜</label>
+          <input type="date" id="reserve-date" required />
+          <label for="reserve-time">시간</label>
+          <input type="time" id="reserve-time" min="11:00" max="22:00" required />
+          <label for="reserve-people">인원</label>
+          <select id="reserve-people" required>
+            <option value="">인원을 선택하세요</option>
+            <option>1명</option>
+            <option>2명</option>
+            <option>3명</option>
+            <option>4명</option>
+            <option>5명 이상</option>
+          </select>
+          <button type="submit" class="btn form-btn">예약하기</button>
+        </form>
+        <p id="reserve-message" class="form-message" hidden></p>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== 소개 섹션 ===== -->
-  <section id="about" class="section section-alt">
+  <section id="about" class="section">
     <h2>카페 소개</h2>
     <p class="about-text">
       Runa_Cafe는 조용히 쉬어가고 싶은 분들을 위한 공간입니다.<br />
