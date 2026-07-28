@@ -1,17 +1,53 @@
 # .gitignore : GitHub에 올리면 안 되는 파일을 지정하는 설정 파일입니다.
 # 여기 적힌 파일/폴더는 git이 무시합니다.
+# ⚠️ 주의: 이미 커밋된 파일은 여기 추가해도 자동으로 안 지워져요.
+#          그럴 땐 `git rm --cached 파일명` 으로 추적을 해제해야 합니다.
 
-# 운영체제가 자동으로 만드는 파일
+# ===== 비밀번호 / 토큰 / API 키 =====
+# 절대 GitHub에 올리면 안 되는 민감한 정보들입니다.
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.*
+secret.*
+*_secret*
+*token*
+*apikey*
+*api_key*
+credentials.*
+config/credentials/
+
+# ===== 개인 정보 =====
+# 고객 명단, 매출 기록 등 개인정보가 담길 수 있는 파일
+개인정보*
+고객*
+customer*
+personal*
+*.csv
+*.xlsx
+*.db
+*.sqlite
+*.sqlite3
+
+# ===== 운영체제가 자동으로 만드는 파일 =====
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# 비밀 정보 (API 키, 비밀번호 등은 절대 GitHub에 올리면 안 돼요!)
-.env
-*.key
-
-# 에디터 설정 파일
+# ===== 에디터 설정 파일 =====
 .vscode/
 .idea/
+*.swp
 
-# 나중에 Node.js를 쓰게 되면 필요한 항목
+# ===== 로그 / 임시 파일 =====
+*.log
+*.tmp
+*.bak
+
+# ===== 나중에 Node.js를 쓰게 되면 필요한 항목 =====
 node_modules/
+dist/
+build/
