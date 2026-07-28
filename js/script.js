@@ -139,16 +139,16 @@ renderCart(); // 페이지가 열리면 저장돼 있던 장바구니를 바로 
 // 값이 비어("") 있는 동안에는 기존처럼 데모(브라우저 저장)로만 동작해요.
 const GOOGLE_FORM = {
   // 폼 주소의 끝을 formResponse 로 바꾼 것
-  // 예: "https://docs.google.com/forms/d/e/폼ID/formResponse"
-  actionUrl: "",
-  // 폼의 각 질문에 붙는 고유 번호 (미리 채워진 링크에서 확인 가능)
+  actionUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSemV4-gf_BMMy12I6Hp9KWUQwVNmME3PPRZc5eO56dmUYMLRA/formResponse",
+  // 폼의 각 질문에 붙는 고유 번호
   entries: {
-    type: "",   // 유형 (픽업 주문 / 좌석 예약)
-    name: "",   // 이름
-    phone: "",  // 연락처
-    when: "",   // 날짜와 시간
-    detail: "", // 내용 (주문 메뉴 또는 인원)
-    total: "",  // 합계 금액
+    type: "entry.1112692107",   // 유형 (픽업 주문 / 좌석 예약)
+    name: "entry.710663101",    // 이름
+    phone: "entry.1648432180",  // 연락처
+    when: "entry.514236630",    // 날짜와 시간
+    detail: "entry.1008244424", // 내용 (주문 메뉴 또는 인원)
+    total: "entry.980443711",   // 합계 금액
   },
 };
 
