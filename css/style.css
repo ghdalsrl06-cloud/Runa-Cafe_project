@@ -64,6 +64,16 @@ body {
   color: #c89b6d; /* 마우스를 올리면 색이 바뀜 */
 }
 
+/* 햄버거 버튼 : 평소(PC 화면)에는 숨겨두고, 모바일에서만 보여줌 */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b4f3a;
+  cursor: pointer;
+}
+
 /* ===== 첫 화면 (히어로) ===== */
 .hero {
   min-height: 100vh; /* 화면 전체 높이만큼 차지 */
@@ -218,4 +228,97 @@ body {
   text-align: center;
   padding: 24px;
   font-size: 0.85rem;
+}
+
+/* =====================================================
+   모바일 화면 대응 (미디어 쿼리)
+   @media : "화면 폭이 O픽셀 이하일 때만" 아래 스타일을 적용
+   ===================================================== */
+
+/* ----- 태블릿/모바일 공통 : 햄버거 메뉴 ----- */
+@media (max-width: 768px) {
+  /* 가로 메뉴는 숨기고 햄버거 버튼을 보여줌 */
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none; /* 평소엔 숨김 */
+    position: absolute; /* 메뉴바 바로 아래에 붙임 */
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column; /* 링크를 세로로 나열 */
+    gap: 0;
+    background: #fffbf5;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* JS가 "open" 클래스를 붙이면 메뉴가 나타남 */
+  .nav-links.open {
+    display: flex;
+  }
+
+  /* 손가락으로 누르기 편하게 링크를 크고 넓게 */
+  .nav-links a {
+    display: block;
+    padding: 14px 20px;
+    border-top: 1px solid #f0e4d4;
+  }
+}
+
+/* ----- 스마트폰 : 글자/여백/카드 크기 조정 ----- */
+@media (max-width: 600px) {
+  /* 첫 화면 글자를 화면에 맞게 줄이기 */
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  /* 섹션 여백을 줄여서 스크롤 부담 줄이기 */
+  .section {
+    padding: 56px 16px;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+
+  .menu-category {
+    font-size: 1.05rem;
+    margin: 28px 0 12px;
+  }
+
+  /* 메뉴 카드를 한 줄에 2개씩 정렬 */
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .menu-card {
+    padding: 20px 12px;
+  }
+
+  .menu-emoji {
+    font-size: 2rem;
+  }
+
+  .menu-card h3 {
+    font-size: 1rem;
+  }
+
+  .menu-card p {
+    font-size: 0.8rem;
+  }
+
+  /* 가게 정보 박스를 화면 폭에 맞춤 */
+  .info-box {
+    display: block;
+    padding: 20px 16px;
+    font-size: 0.9rem;
+  }
 }
