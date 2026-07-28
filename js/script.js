@@ -133,6 +133,49 @@ function renderCart() {
 }
 renderCart(); // 페이지가 열리면 저장돼 있던 장바구니를 바로 보여줌
 
+// ----- 4.5) Google Forms 연동 설정 -----
+// 구글 폼을 만들고 아래 값을 채우면, 주문/예약 내용이 사장님의
+// 구글 폼(응답 시트)으로 실제 전송됩니다.
+// 값이 비어("") 있는 동안에는 기존처럼 데모(브라우저 저장)로만 동작해요.
+const GOOGLE_FORM = {
+  // 폼 주소의 끝을 formResponse 로 바꾼 것
+  // 예: "https://docs.google.com/forms/d/e/폼ID/formResponse"
+  actionUrl: "",
+  // 폼의 각 질문에 붙는 고유 번호 (미리 채워진 링크에서 확인 가능)
+  entries: {
+    type: "",   // 유형 (픽업 주문 / 좌석 예약)
+    name: "",   // 이름
+    phone: "",  // 연락처
+    when: "",   // 날짜와 시간
+    detail: "", // 내용 (주문 메뉴 또는 인원)
+    total: "",  // 합계 금액
+  },
+};
+
+// 구글 폼으로 전송하기. 설정이 비어있으면 false를 돌려줌 (= 데모 모드)
+function sendToGoogleForm(data) {
+  if (!GOOGLE_FORM.actionUrl) {
+    return false;
+  }
+  const body = new FormData();
+  Object.keys(data).forEach(function (key) {
+    if (GOOGLE_FORM.entries[key]) {
+      body.append(GOOGLE_FORM.entries[key], data[key]);
+    }
+  });
+  // mode: "no-cors" → 구글의 응답을 읽을 수는 없지만 제출 자체는 정상 접수됨
+  fetch(GOOGLE_FORM.actionUrl, { method: "POST", mode: "no-cors", body: body });
+  return true;
+}
+
+// 연동이 켜져 있으면 데모 안내 문구를 실제 안내로 바꿔줌
+if (GOOGLE_FORM.actionUrl) {
+  const notice = document.querySelector(".demo-notice");
+  notice.innerHTML =
+    "✅ 주문/예약 내용이 사장님에게 실시간으로 전달됩니다. " +
+    "픽업 시간에 맞춰 준비해드릴게요!";
+}
+
 // ----- 5) 안내 메시지 보여주기 (성공/실패 공용) -----
 function showMessage(id, text, isSuccess) {
   const el = document.getElementById(id);
@@ -151,16 +194,33 @@ document.getElementById("order-form").addEventListener("submit", function (e) {
   }
 
   const name = document.getElementById("order-name").value;
+  const phone = document.getElementById("order-phone").value;
   const time = document.getElementById("order-time").value;
   const total = cart.reduce(function (sum, item) {
     return sum + item.price * item.qty;
   }, 0);
+  // 장바구니를 "아메리카노×2, 소금빵×1" 같은 한 줄 글자로 정리
+  const itemsText = cart
+    .map(function (item) {
+      return item.name + "×" + item.qty;
+    })
+    .join(", ");
 
-  // 주문 기록을 브라우저에 저장 (데모)
+  // 구글 폼으로 전송 (연동 전이면 false → 데모 모드)
+  const sent = sendToGoogleForm({
+    type: "픽업 주문",
+    name: name,
+    phone: phone,
+    when: time,
+    detail: itemsText,
+    total: total.toLocaleString() + "원",
+  });
+
+  // 주문 기록을 브라우저에도 저장
   const orders = JSON.parse(localStorage.getItem("runa_orders") || "[]");
   orders.push({
     name: name,
-    phone: document.getElementById("order-phone").value,
+    phone: phone,
     pickupTime: time,
     items: cart.slice(), // 장바구니 내용 복사해서 저장
     total: total,
@@ -176,7 +236,7 @@ document.getElementById("order-form").addEventListener("submit", function (e) {
   showMessage(
     "order-message",
     name + "님, " + time + " 픽업 주문이 접수되었습니다! 합계 " +
-      total.toLocaleString() + "원 (데모)",
+      total.toLocaleString() + "원" + (sent ? "" : " (데모)"),
     true
   );
 });
@@ -186,15 +246,26 @@ document.getElementById("reserve-form").addEventListener("submit", function (e) 
   e.preventDefault();
 
   const name = document.getElementById("reserve-name").value;
+  const phone = document.getElementById("reserve-phone").value;
   const date = document.getElementById("reserve-date").value;
   const time = document.getElementById("reserve-time").value;
   const people = document.getElementById("reserve-people").value;
 
-  // 예약 기록을 브라우저에 저장 (데모)
+  // 구글 폼으로 전송 (연동 전이면 false → 데모 모드)
+  const sent = sendToGoogleForm({
+    type: "좌석 예약",
+    name: name,
+    phone: phone,
+    when: date + " " + time,
+    detail: people,
+    total: "",
+  });
+
+  // 예약 기록을 브라우저에도 저장
   const reservations = JSON.parse(localStorage.getItem("runa_reservations") || "[]");
   reservations.push({
     name: name,
-    phone: document.getElementById("reserve-phone").value,
+    phone: phone,
     date: date,
     time: time,
     people: people,
@@ -205,7 +276,8 @@ document.getElementById("reserve-form").addEventListener("submit", function (e) 
   this.reset();
   showMessage(
     "reserve-message",
-    name + "님, " + date + " " + time + " " + people + " 예약이 접수되었습니다! (데모)",
+    name + "님, " + date + " " + time + " " + people + " 예약이 접수되었습니다!" +
+      (sent ? "" : " (데모)"),
     true
   );
 });
