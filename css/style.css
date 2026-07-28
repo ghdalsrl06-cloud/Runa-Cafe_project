@@ -17,9 +17,18 @@ html {
 }
 
 body {
-  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  /* 구글 폰트가 로딩되기 전에는 시스템 기본 글꼴을 임시로 사용 */
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   color: #3b2f2f; /* 기본 글자색 (진한 갈색) */
   line-height: 1.6;
+}
+
+/* 제목 계열은 붓글씨 느낌의 세리프 글꼴로 분위기 살리기 */
+h1,
+h2,
+.logo,
+.footer-logo {
+  font-family: "Gowun Batang", serif;
 }
 
 /* ===== 상단 메뉴바 ===== */
@@ -64,6 +73,32 @@ body {
   color: #c89b6d; /* 마우스를 올리면 색이 바뀜 */
 }
 
+/* 지금 보고 있는 섹션의 메뉴를 강조 (JS 스크롤스파이가 붙여줌) */
+.nav-links a.active {
+  color: #c89b6d;
+  font-weight: 700;
+}
+
+/* 상단 메뉴의 장바구니 개수 배지 */
+/* 주의: 아래에서 display를 직접 지정하면 HTML의 hidden 속성(display:none)이
+   덮어써져 버려요. 그래서 hidden일 때는 확실히 숨기는 규칙을 함께 둡니다. */
+.cart-badge[hidden] {
+  display: none;
+}
+
+.cart-badge {
+  display: inline-block;
+  min-width: 18px;
+  padding: 1px 6px;
+  background: #c89b6d;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+}
+
 /* 햄버거 버튼 : 평소(PC 화면)에는 숨겨두고, 모바일에서만 보여줌 */
 .menu-toggle {
   display: none;
@@ -82,20 +117,40 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: linear-gradient(160deg, #fdf6ec 0%, #f3e3cf 100%);
+  /* 카페 실내 사진 위에 어두운 반투명 막을 덮어 글자가 잘 보이게 함
+     (사진이 로딩되기 전에는 맨 뒤의 크림색이 보임) */
+  background:
+    linear-gradient(rgba(43, 30, 20, 0.5), rgba(43, 30, 20, 0.62)),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3GlkPnXPJFo7VCrgoZkgPhAXpRM/hf_20260728_012529_d7ae340c-31c1-4f14-b216-1d50cf08ccbd.png")
+      center / cover no-repeat,
+    #f3e3cf;
   padding: 0 20px;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  color: #6b4f3a;
+  font-size: 3.4rem;
+  color: #fff;
   margin-bottom: 12px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35); /* 사진 위에서도 또렷하게 */
 }
 
 .hero p {
-  font-size: 1.1rem;
-  color: #8a7361;
+  font-size: 1.15rem;
+  color: #f3e3cf;
   margin-bottom: 28px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 사진 배경 위의 버튼은 밝은 색으로 반전 */
+.hero .btn {
+  background: #f3e3cf;
+  color: #6b4f3a;
+  font-weight: 700;
+}
+
+.hero .btn:hover {
+  background: #c89b6d;
+  color: #fff;
 }
 
 /* 버튼 스타일 */
@@ -429,8 +484,84 @@ body {
   background: #6b4f3a;
   color: #f3e3cf;
   text-align: center;
-  padding: 24px;
-  font-size: 0.85rem;
+  padding: 36px 24px;
+  font-size: 0.88rem;
+  line-height: 1.9;
+}
+
+.footer-logo {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+}
+
+.footer-copy {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  opacity: 0.7;
+}
+
+/* ===== 맨 위로 버튼 ===== */
+#top-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: #6b4f3a;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  /* 평소엔 숨겨두고, 스크롤을 내리면 JS가 .show를 붙여 보여줌 */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 90;
+}
+
+#top-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+#top-btn:hover {
+  background: #c89b6d;
+}
+
+/* ===== 스크롤 등장 애니메이션 ===== */
+/* JS가 .reveal을 붙인 요소는 처음엔 살짝 아래에 투명하게 있다가 */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* 화면에 들어오면 .visible이 붙으면서 부드럽게 떠오름 */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* "움직임 줄이기"를 켠 사용자에게는 애니메이션을 생략 (접근성) */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===== 키보드 사용자를 위한 포커스 표시 (접근성) ===== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #c89b6d;
+  outline-offset: 2px;
 }
 
 /* =====================================================

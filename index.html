@@ -12,6 +12,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- 브라우저 탭에 표시되는 제목 -->
   <title>Runa_Cafe | 루나 카페</title>
+  <!-- 구글 폰트 : 제목용(Gowun Batang)과 본문용(Noto Sans KR) 글꼴 불러오기 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
   <!-- 꾸미기 담당인 CSS 파일을 연결 -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -27,7 +34,12 @@
         <ul class="nav-links">
           <li><a href="#home">홈</a></li>
           <li><a href="#menu">메뉴</a></li>
-          <li><a href="#reserve">예약·주문</a></li>
+          <li>
+            <a href="#reserve">예약·주문
+              <!-- 장바구니에 담긴 개수를 보여주는 배지 (JS가 숫자를 채움) -->
+              <span id="cart-badge" class="cart-badge" hidden>0</span>
+            </a>
+          </li>
           <li><a href="#about">소개</a></li>
           <li><a href="#location">오시는 길</a></li>
         </ul>
@@ -259,8 +271,14 @@
 
   <!-- ===== 하단 (푸터) ===== -->
   <footer class="footer">
-    <p>© 2026 Runa_Cafe. All rights reserved.</p>
+    <p class="footer-logo">🌙 Runa_Cafe</p>
+    <p>매일 11:00 ~ 23:00 · 월요일 휴무</p>
+    <p>서울특별시 마포구 달빛로 24, 1층 (샘플)</p>
+    <p class="footer-copy">© 2026 Runa_Cafe. All rights reserved.</p>
   </footer>
+
+  <!-- 맨 위로 이동 버튼 (스크롤을 내리면 JS가 보여줌) -->
+  <button id="top-btn" aria-label="맨 위로 이동">↑</button>
 
   <!-- 동작(인터랙션) 담당인 JavaScript 파일을 연결 -->
   <script src="js/script.js"></script>
