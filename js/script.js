@@ -24,7 +24,9 @@ const navLinks = document.querySelector(".nav-links");
 menuToggle.addEventListener("click", function () {
   // classList.toggle : "open" 클래스가 없으면 붙이고, 있으면 뗀다
   // CSS에서 .nav-links.open 일 때만 메뉴가 보이도록 만들어뒀어요
-  navLinks.classList.toggle("open");
+  const isOpen = navLinks.classList.toggle("open");
+  // 열림/닫힘에 따라 버튼 모양도 ☰ ↔ ✕ 로 바꿔줌
+  menuToggle.textContent = isOpen ? "✕" : "☰";
 });
 
 // 메뉴 링크를 누르면 메뉴가 자동으로 닫히게 하기
@@ -32,6 +34,7 @@ menuToggle.addEventListener("click", function () {
 document.querySelectorAll(".nav-links a").forEach(function (link) {
   link.addEventListener("click", function () {
     navLinks.classList.remove("open");
+    menuToggle.textContent = "☰";
   });
 });
 
@@ -101,6 +104,7 @@ function renderCart() {
     list.innerHTML =
       '<li class="cart-empty">아직 담은 메뉴가 없어요. 메뉴에서 "담기"를 눌러보세요!</li>';
     totalEl.textContent = "";
+    updateCartBadge();
     return;
   }
 
@@ -117,6 +121,7 @@ function renderCart() {
     list.appendChild(li);
   });
   totalEl.textContent = "합계 : " + total.toLocaleString() + "원";
+  updateCartBadge();
 
   // ＋/－ 버튼 동작 연결
   list.querySelectorAll(".qty-btn").forEach(function (b) {
@@ -132,6 +137,16 @@ function renderCart() {
   });
 }
 renderCart(); // 페이지가 열리면 저장돼 있던 장바구니를 바로 보여줌
+
+// 상단 메뉴의 장바구니 배지에 담긴 개수 표시하기
+function updateCartBadge() {
+  const badge = document.getElementById("cart-badge");
+  const count = cart.reduce(function (sum, item) {
+    return sum + item.qty;
+  }, 0);
+  badge.textContent = count;
+  badge.hidden = count === 0; // 0개면 배지를 숨김
+}
 
 // ----- 4.5) Google Forms 연동 설정 -----
 // 구글 폼을 만들고 아래 값을 채우면, 주문/예약 내용이 사장님의
@@ -285,6 +300,66 @@ document.getElementById("reserve-form").addEventListener("submit", function (e) 
 // 예약 날짜는 오늘 이후만 고를 수 있게 제한
 const today = new Date().toISOString().split("T")[0]; // 예: "2026-07-28"
 document.getElementById("reserve-date").setAttribute("min", today);
+
+// =========================================================
+// UI/UX 개선 기능들
+// =========================================================
+
+// ----- A) 스크롤 등장 애니메이션 -----
+// IntersectionObserver : 요소가 화면에 "들어왔는지"를 감시하는 도구.
+// 화면에 들어온 순간 .visible을 붙여 CSS 애니메이션을 발동시켜요.
+const revealTargets = document.querySelectorAll(
+  ".menu-card, .gallery figure, .panel, .info-box"
+);
+const revealObserver = new IntersectionObserver(
+  function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target); // 한 번 나타나면 감시 종료
+      }
+    });
+  },
+  { threshold: 0.15 } // 요소가 15% 보였을 때 발동
+);
+revealTargets.forEach(function (el) {
+  el.classList.add("reveal");
+  revealObserver.observe(el);
+});
+
+// ----- B) 스크롤스파이 : 보고 있는 섹션의 메뉴를 강조 -----
+const sections = document.querySelectorAll("section[id]");
+const spyObserver = new IntersectionObserver(
+  function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // 모든 메뉴에서 강조를 지우고, 현재 섹션 메뉴에만 강조를 붙임
+        document.querySelectorAll(".nav-links a").forEach(function (a) {
+          a.classList.toggle(
+            "active",
+            a.getAttribute("href") === "#" + entry.target.id
+          );
+        });
+      }
+    });
+  },
+  { rootMargin: "-40% 0px -55% 0px" } // 화면 중앙 부근에 온 섹션을 기준으로
+);
+sections.forEach(function (sec) {
+  spyObserver.observe(sec);
+});
+
+// ----- C) 맨 위로 버튼 -----
+const topBtn = document.getElementById("top-btn");
+
+window.addEventListener("scroll", function () {
+  // 600px 이상 내려가면 버튼을 보여줌
+  topBtn.classList.toggle("show", window.scrollY > 600);
+});
+
+topBtn.addEventListener("click", function () {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
 // 콘솔(개발자 도구)에서 확인할 수 있는 환영 메시지
 // 브라우저에서 F12 키를 눌러 Console 탭을 열면 아래 문구가 보여요.
