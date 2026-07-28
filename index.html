@@ -11,7 +11,7 @@
   <!-- 모바일 화면에서도 잘 보이게 하는 설정 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- 브라우저 탭에 표시되는 제목 -->
-  <title>Runa Cafe | 루나 카페</title>
+  <title>Runa_Cafe | 루나 카페</title>
   <!-- 꾸미기 담당인 CSS 파일을 연결 -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -20,7 +20,7 @@
   <!-- ===== 상단 메뉴바 (네비게이션) ===== -->
   <header class="navbar">
     <div class="navbar-inner">
-      <a href="#home" class="logo">🌙 Runa Cafe</a>
+      <a href="#home" class="logo">🌙 Runa_Cafe</a>
       <nav>
         <ul class="nav-links">
           <li><a href="#home">홈</a></li>
@@ -34,7 +34,7 @@
 
   <!-- ===== 첫 화면 (히어로 섹션) ===== -->
   <section id="home" class="hero">
-    <h1>Runa Cafe</h1>
+    <h1>Runa_Cafe</h1>
     <p>달빛처럼 은은한 하루의 쉼표, 루나 카페</p>
     <a href="#menu" class="btn">메뉴 보러가기</a>
   </section>
@@ -42,6 +42,28 @@
   <!-- ===== 메뉴 섹션 ===== -->
   <section id="menu" class="section">
     <h2>메뉴</h2>
+
+    <!-- 시그니처 : 우리 가게만의 대표 메뉴 (달 컨셉) -->
+    <h3 class="menu-category">🌙 시그니처</h3>
+    <div class="menu-grid">
+      <div class="menu-card signature">
+        <span class="badge">BEST</span>
+        <span class="menu-emoji">🌕</span>
+        <h3>루나 크림 라떼</h3>
+        <p>보름달처럼 둥근 수제 크림을 올린 시그니처 라떼</p>
+        <span class="price">5,800원</span>
+      </div>
+      <div class="menu-card signature">
+        <span class="badge">NEW</span>
+        <span class="menu-emoji">🌌</span>
+        <h3>미드나잇 초코</h3>
+        <p>다크 초콜릿에 소금 캐러멜을 더한 진한 초코 음료</p>
+        <span class="price">6,000원</span>
+      </div>
+    </div>
+
+    <!-- 커피 -->
+    <h3 class="menu-category">☕ 커피</h3>
     <div class="menu-grid">
       <div class="menu-card">
         <span class="menu-emoji">☕</span>
@@ -56,16 +78,74 @@
         <span class="price">4,500원</span>
       </div>
       <div class="menu-card">
-        <span class="menu-emoji">🍰</span>
-        <h3>수제 케이크</h3>
-        <p>매일 아침 직접 굽는 디저트</p>
-        <span class="price">6,000원</span>
+        <span class="menu-emoji">🍦</span>
+        <h3>바닐라라떼</h3>
+        <p>은은한 바닐라 향의 달콤한 라떼</p>
+        <span class="price">5,000원</span>
       </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🍮</span>
+        <h3>카라멜 마키아토</h3>
+        <p>카라멜의 달콤함과 에스프레소의 조화</p>
+        <span class="price">5,300원</span>
+      </div>
+    </div>
+
+    <!-- 논커피 : 커피를 못 마시는 손님을 위한 메뉴 -->
+    <h3 class="menu-category">🍵 논커피</h3>
+    <div class="menu-grid">
       <div class="menu-card">
         <span class="menu-emoji">🍵</span>
         <h3>말차라떼</h3>
         <p>고소하고 진한 프리미엄 말차</p>
-        <span class="price">5,000원</span>
+        <span class="price">5,500원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🍓</span>
+        <h3>딸기라떼</h3>
+        <p>생딸기청과 우유의 상큼한 만남</p>
+        <span class="price">5,800원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🍋</span>
+        <h3>자몽에이드</h3>
+        <p>수제 자몽청으로 만든 시원한 에이드</p>
+        <span class="price">5,500원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🫖</span>
+        <h3>캐모마일 티</h3>
+        <p>편안한 휴식을 위한 허브티</p>
+        <span class="price">4,500원</span>
+      </div>
+    </div>
+
+    <!-- 디저트 -->
+    <h3 class="menu-category">🍰 디저트</h3>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <span class="menu-emoji">🧀</span>
+        <h3>바스크 치즈케이크</h3>
+        <p>겉은 진하게, 속은 촉촉하게 구운 치즈케이크</p>
+        <span class="price">6,500원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🥐</span>
+        <h3>소금빵</h3>
+        <p>버터 풍미 가득한 겉바속촉 소금빵</p>
+        <span class="price">3,500원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🍪</span>
+        <h3>르뱅쿠키</h3>
+        <p>겉은 바삭, 속은 꾸덕한 초코 쿠키</p>
+        <span class="price">4,000원</span>
+      </div>
+      <div class="menu-card">
+        <span class="menu-emoji">🥞</span>
+        <h3>크로플</h3>
+        <p>아이스크림을 올린 바삭한 크로플</p>
+        <span class="price">5,500원</span>
       </div>
     </div>
   </section>
@@ -74,24 +154,27 @@
   <section id="about" class="section section-alt">
     <h2>카페 소개</h2>
     <p class="about-text">
-      루나 카페는 조용히 쉬어가고 싶은 분들을 위한 공간입니다.<br />
-      정성껏 내린 커피 한 잔과 함께 여유로운 시간을 보내세요.
+      Runa_Cafe는 조용히 쉬어가고 싶은 분들을 위한 공간입니다.<br />
+      달빛처럼 은은한 조명 아래에서, 정성껏 내린 커피 한 잔과 함께<br />
+      여유로운 시간을 보내세요.
     </p>
   </section>
 
   <!-- ===== 오시는 길 섹션 ===== -->
   <section id="location" class="section">
     <h2>오시는 길</h2>
+    <!-- ⚠️ 아래는 샘플 정보입니다. 실제 가게를 차리면 진짜 정보로 바꿔주세요! -->
     <div class="info-box">
-      <p>📍 주소 : 서울시 ○○구 ○○로 123 (여기를 실제 주소로 바꿔보세요!)</p>
-      <p>🕐 영업시간 : 매일 10:00 ~ 22:00</p>
-      <p>📞 전화 : 02-1234-5678</p>
+      <p>📍 주소 : 서울특별시 마포구 달빛로 24, 1층 (샘플 주소)</p>
+      <p>🕐 영업시간 : 매일 11:00 ~ 23:00 (매주 월요일 휴무)</p>
+      <p>📞 전화 : 02-1234-5678 (샘플 번호)</p>
+      <p>📷 인스타그램 : @runa_cafe (준비 중)</p>
     </div>
   </section>
 
   <!-- ===== 하단 (푸터) ===== -->
   <footer class="footer">
-    <p>© 2026 Runa Cafe. All rights reserved.</p>
+    <p>© 2026 Runa_Cafe. All rights reserved.</p>
   </footer>
 
   <!-- 동작(인터랙션) 담당인 JavaScript 파일을 연결 -->
