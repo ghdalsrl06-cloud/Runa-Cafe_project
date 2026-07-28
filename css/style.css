@@ -1,8 +1,26 @@
 /*
-  style.css : 홈페이지를 "꾸미는" 파일입니다.
-  색상, 글자 크기, 배치 등을 여기서 정해요.
-  값을 바꿔서 저장한 뒤 브라우저를 새로고침하면 바로 반영됩니다.
+  style.css : 홈페이지를 "꾸미는" 파일입니다. — 문라이트 다크 테마 🌙
+  깊은 밤하늘 네이비 배경에 달빛 골드 포인트를 쓰는 고급 무드예요.
 */
+
+/* =====================================================
+   색상 변수 (CSS Custom Property)
+   자주 쓰는 색을 한 곳에 이름 붙여 정의해두고,
+   아래에서 var(--이름) 으로 가져다 씁니다.
+   → 나중에 색을 바꾸고 싶으면 여기 한 줄만 고치면 전체에 반영!
+   ===================================================== */
+:root {
+  --bg: #141824;          /* 기본 배경 : 깊은 미드나잇 네이비 */
+  --bg-alt: #1a1f2e;      /* 살짝 밝은 배경 (교차 섹션용) */
+  --surface: #202638;     /* 카드/패널 표면 */
+  --surface-deep: #171c2b;/* 입력칸처럼 한 단계 꺼진 표면 */
+  --line: #323a52;        /* 테두리 선 */
+  --gold: #d4b578;        /* 달빛 골드 (포인트 색) */
+  --gold-soft: #e8d5a8;   /* 밝은 골드 (호버 등) */
+  --text: #ece7db;        /* 기본 글자 : 따뜻한 크림빛 */
+  --muted: #9aa1b8;       /* 흐린 글자 (보조 설명) */
+  --deep: #0d101a;        /* 가장 어두운 색 (푸터 등) */
+}
 
 /* ===== 기본 초기화 : 브라우저마다 다른 기본 여백을 없애기 ===== */
 * {
@@ -19,8 +37,9 @@ html {
 body {
   /* 구글 폰트가 로딩되기 전에는 시스템 기본 글꼴을 임시로 사용 */
   font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  color: #3b2f2f; /* 기본 글자색 (진한 갈색) */
-  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
 }
 
 /* 제목 계열은 붓글씨 느낌의 세리프 글꼴로 분위기 살리기 */
@@ -31,67 +50,77 @@ h2,
   font-family: "Gowun Batang", serif;
 }
 
+/* 드래그로 글자를 선택했을 때의 색까지 테마에 맞추는 디테일 */
+::selection {
+  background: var(--gold);
+  color: var(--deep);
+}
+
 /* ===== 상단 메뉴바 ===== */
 .navbar {
   position: fixed; /* 스크롤해도 항상 위에 고정 */
   top: 0;
   width: 100%;
-  background: rgba(255, 251, 245, 0.95);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  background: rgba(20, 24, 36, 0.85);
+  backdrop-filter: blur(10px); /* 메뉴바 뒤가 비쳐 보이는 유리 효과 */
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
   z-index: 100;
 }
 
 .navbar-inner {
-  max-width: 960px;
+  max-width: 1024px;
   margin: 0 auto; /* 가운데 정렬 */
-  padding: 14px 20px;
+  padding: 16px 24px;
   display: flex; /* 로고와 메뉴를 가로로 나란히 */
   justify-content: space-between;
   align-items: center;
 }
 
 .logo {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: bold;
-  color: #6b4f3a;
+  color: var(--gold);
   text-decoration: none; /* 링크 밑줄 제거 */
+  letter-spacing: 0.04em;
 }
 
 .nav-links {
   display: flex;
-  gap: 24px;
+  gap: 28px;
   list-style: none; /* 목록 앞의 점 제거 */
 }
 
 .nav-links a {
-  color: #6b4f3a;
+  color: var(--text);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  transition: color 0.2s;
 }
 
 .nav-links a:hover {
-  color: #c89b6d; /* 마우스를 올리면 색이 바뀜 */
+  color: var(--gold-soft); /* 마우스를 올리면 골드로 */
 }
 
 /* 지금 보고 있는 섹션의 메뉴를 강조 (JS 스크롤스파이가 붙여줌) */
 .nav-links a.active {
-  color: #c89b6d;
+  color: var(--gold);
   font-weight: 700;
 }
 
-/* 상단 메뉴의 장바구니 개수 배지 */
 /* 주의: 아래에서 display를 직접 지정하면 HTML의 hidden 속성(display:none)이
    덮어써져 버려요. 그래서 hidden일 때는 확실히 숨기는 규칙을 함께 둡니다. */
 .cart-badge[hidden] {
   display: none;
 }
 
+/* 상단 메뉴의 장바구니 개수 배지 */
 .cart-badge {
   display: inline-block;
   min-width: 18px;
   padding: 1px 6px;
-  background: #c89b6d;
-  color: #fff;
+  background: var(--gold);
+  color: var(--deep);
   border-radius: 10px;
   font-size: 0.7rem;
   font-weight: 700;
@@ -105,7 +134,7 @@ h2,
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #6b4f3a;
+  color: var(--gold);
   cursor: pointer;
 }
 
@@ -117,89 +146,114 @@ h2,
   justify-content: center;
   align-items: center;
   text-align: center;
-  /* 카페 실내 사진 위에 어두운 반투명 막을 덮어 글자가 잘 보이게 함
-     (사진이 로딩되기 전에는 맨 뒤의 크림색이 보임) */
+  /* 카페 실내 사진 위에 짙은 남색 반투명 막을 덮어 밤 분위기를 냄
+     (사진이 로딩되기 전에는 맨 뒤의 네이비색이 보임) */
   background:
-    linear-gradient(rgba(43, 30, 20, 0.5), rgba(43, 30, 20, 0.62)),
+    linear-gradient(rgba(13, 16, 26, 0.62), rgba(13, 16, 26, 0.82)),
     url("https://d8j0ntlcm91z4.cloudfront.net/user_3GlkPnXPJFo7VCrgoZkgPhAXpRM/hf_20260728_012529_d7ae340c-31c1-4f14-b216-1d50cf08ccbd.png")
       center / cover no-repeat,
-    #f3e3cf;
+    var(--bg);
   padding: 0 20px;
 }
 
+/* 제목 위의 작은 영문 레터링 */
+.hero-eyebrow {
+  color: var(--gold);
+  font-size: 0.78rem;
+  letter-spacing: 0.45em; /* 글자 사이를 넓게 벌리면 고급스러워 보여요 */
+  margin-bottom: 18px;
+  animation: rise 0.9s ease both;
+}
+
 .hero h1 {
-  font-size: 3.4rem;
-  color: #fff;
-  margin-bottom: 12px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35); /* 사진 위에서도 또렷하게 */
+  font-size: 3.6rem;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+  animation: rise 0.9s ease 0.15s both; /* 살짝 늦게 떠오르게 */
 }
 
 .hero p {
-  font-size: 1.15rem;
-  color: #f3e3cf;
-  margin-bottom: 28px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  font-size: 1.08rem;
+  color: var(--muted);
+  margin-bottom: 34px;
+  animation: rise 0.9s ease 0.3s both;
 }
 
-/* 사진 배경 위의 버튼은 밝은 색으로 반전 */
 .hero .btn {
-  background: #f3e3cf;
-  color: #6b4f3a;
-  font-weight: 700;
+  animation: rise 0.9s ease 0.45s both;
 }
 
-.hero .btn:hover {
-  background: #c89b6d;
-  color: #fff;
+/* 페이지가 열릴 때 아래에서 떠오르는 애니메이션 정의 */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* 버튼 스타일 */
+/* 버튼 스타일 : 골드 라인의 절제된 아웃라인 버튼 */
 .btn {
   display: inline-block;
-  background: #6b4f3a;
-  color: #fff;
-  padding: 12px 28px;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 13px 34px;
   border-radius: 30px; /* 둥근 모서리 */
   text-decoration: none;
-  transition: background 0.2s; /* 색이 부드럽게 변하는 효과 */
+  letter-spacing: 0.08em;
+  transition: background 0.25s, color 0.25s;
 }
 
 .btn:hover {
-  background: #c89b6d;
+  background: var(--gold);
+  color: var(--deep);
 }
 
 /* ===== 공통 섹션 스타일 ===== */
 .section {
-  max-width: 960px;
+  max-width: 1024px;
   margin: 0 auto;
-  padding: 80px 20px;
+  padding: 100px 24px;
   text-align: center;
+}
+
+/* 섹션 제목 위의 작은 영문 레터링 */
+.eyebrow {
+  color: var(--gold);
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  margin-bottom: 10px;
 }
 
 .section h2 {
   font-size: 2rem;
-  color: #6b4f3a;
-  margin-bottom: 36px;
+  color: var(--text);
+  margin-bottom: 44px;
 }
 
-/* 배경색이 살짝 다른 섹션 (소개 부분) */
+/* 배경색이 살짝 다른 섹션 (예약·주문 부분) */
 .section-alt {
   max-width: none;
-  background: #fdf6ec;
+  background: var(--bg-alt);
 }
 
 .about-text {
-  color: #8a7361;
-  font-size: 1.05rem;
+  color: var(--muted);
+  font-size: 1.02rem;
 }
 
 /* ===== 카페 사진 갤러리 ===== */
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 사진 3장을 가로로 나란히 */
-  gap: 16px;
-  max-width: 960px;
-  margin: 40px auto 0;
+  gap: 18px;
+  max-width: 1024px;
+  margin: 44px auto 0;
 }
 
 .gallery figure {
@@ -210,63 +264,70 @@ h2,
   width: 100%;
   aspect-ratio: 4 / 3; /* 사진 비율을 통일해서 높이를 맞춤 */
   object-fit: cover; /* 비율이 달라도 찌그러지지 않게 잘라서 채움 */
-  border-radius: 14px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  border: 1px solid var(--line);
   display: block;
+  transition: transform 0.35s ease;
+}
+
+.gallery figure:hover img {
+  transform: scale(1.025); /* 마우스를 올리면 살짝 확대 */
 }
 
 .gallery figcaption {
-  margin-top: 8px;
-  font-size: 0.85rem;
-  color: #8a7361;
+  margin-top: 10px;
+  font-size: 0.84rem;
+  color: var(--muted);
 }
 
 /* ===== 메뉴 카테고리 제목 (시그니처, 커피, 논커피, 디저트) ===== */
 .menu-category {
-  font-size: 1.2rem;
-  color: #8a7361;
+  font-size: 1.1rem;
+  color: var(--gold);
   text-align: left;
-  margin: 40px 0 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #f0e4d4; /* 밑줄로 구분감 주기 */
+  margin: 48px 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line); /* 밑줄로 구분감 주기 */
+  letter-spacing: 0.05em;
 }
 
 /* ===== 메뉴 카드 ===== */
 .menu-grid {
   display: grid; /* 격자 배치 */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 화면 크기에 맞춰 자동 배치 */
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); /* 화면 크기에 맞춰 자동 배치 */
+  gap: 18px;
 }
 
 .menu-card {
-  background: #fff;
-  border: 1px solid #f0e4d4;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 28px 18px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s; /* 마우스 올리면 살짝 떠오르는 효과 */
+  padding: 30px 18px;
+  transition: transform 0.25s, border-color 0.25s;
 }
 
 .menu-card:hover {
   transform: translateY(-6px);
+  border-color: var(--gold); /* 떠오르며 골드 테두리로 */
 }
 
 /* 시그니처 메뉴 카드는 살짝 다르게 강조 */
 .menu-card.signature {
   position: relative; /* 배지를 카드 기준으로 배치하기 위해 필요 */
-  background: linear-gradient(160deg, #fffdf9 0%, #fdf1de 100%);
-  border: 1.5px solid #c89b6d;
+  background: linear-gradient(165deg, #262c42 0%, #1d2233 100%);
+  border-color: var(--gold);
 }
 
 /* BEST / NEW 배지 */
 .badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #6b4f3a;
-  color: #fff;
-  font-size: 0.7rem;
+  top: 14px;
+  right: 14px;
+  background: var(--gold);
+  color: var(--deep);
+  font-size: 0.68rem;
   font-weight: bold;
+  letter-spacing: 0.08em;
   padding: 4px 10px;
   border-radius: 20px;
 }
@@ -276,34 +337,54 @@ h2,
 }
 
 .menu-card h3 {
-  margin: 10px 0 6px;
-  color: #6b4f3a;
+  margin: 12px 0 6px;
+  color: var(--text);
+  font-weight: 500;
 }
 
 .menu-card p {
-  font-size: 0.9rem;
-  color: #8a7361;
-  margin-bottom: 10px;
+  font-size: 0.87rem;
+  color: var(--muted);
+  margin-bottom: 12px;
 }
 
 .price {
   font-weight: bold;
-  color: #c89b6d;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+}
+
+/* 메뉴 카드의 "담기" 버튼 (JS가 자동으로 만들어 붙임) */
+.add-btn {
+  margin-top: 12px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.83rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.add-btn:hover {
+  background: var(--gold);
+  color: var(--deep);
 }
 
 /* ===== 예약 · 주문 ===== */
 
-/* 데모 기능 안내 문구 */
+/* 데모/연동 안내 문구 */
 .demo-notice {
   max-width: 640px;
-  margin: -12px auto 32px;
-  padding: 12px 18px;
-  background: #fff;
-  border: 1px solid #f0e4d4;
-  border-left: 4px solid #c89b6d;
+  margin: -16px auto 36px;
+  padding: 13px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
   border-radius: 8px;
-  font-size: 0.9rem;
-  color: #8a7361;
+  font-size: 0.88rem;
+  color: var(--muted);
   text-align: left;
 }
 
@@ -311,65 +392,80 @@ h2,
 .reserve-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  max-width: 880px;
+  gap: 22px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: left;
 }
 
 .panel {
-  background: #fff;
-  border: 1px solid #f0e4d4;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 26px 22px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 28px 24px;
 }
 
 .panel h3 {
-  color: #6b4f3a;
+  color: var(--text);
   margin-bottom: 6px;
+  font-weight: 500;
 }
 
 .panel-desc {
-  font-size: 0.88rem;
-  color: #8a7361;
-  margin-bottom: 16px;
+  font-size: 0.86rem;
+  color: var(--muted);
+  margin-bottom: 18px;
 }
 
 /* 입력칸들을 세로로 가지런히 */
 .panel form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
 }
 
 .panel label {
-  font-size: 0.82rem;
-  color: #8a7361;
-  margin-bottom: -6px; /* 라벨과 입력칸 사이를 살짝 붙임 */
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: -7px; /* 라벨과 입력칸 사이를 살짝 붙임 */
 }
 
 .panel input,
 .panel select {
-  padding: 10px 12px;
-  border: 1px solid #e5d5c0;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   font-family: inherit;
-  background: #fff;
-  color: #3b2f2f;
+  background: var(--surface-deep);
+  color: var(--text);
+  /* 브라우저 기본 달력/시계 아이콘을 어두운 테마에 맞게 밝힘 */
+  color-scheme: dark;
+}
+
+.panel input::placeholder {
+  color: var(--muted);
 }
 
 .panel input:focus,
 .panel select:focus {
-  outline: 2px solid #c89b6d; /* 선택된 입력칸을 또렷하게 표시 */
+  outline: 2px solid var(--gold); /* 선택된 입력칸을 또렷하게 표시 */
 }
 
+/* 주문하기/예약하기 : 눈에 띄어야 하는 핵심 버튼이라 골드로 꽉 채움 */
 .form-btn {
   border: none;
   cursor: pointer;
-  font-size: 1rem;
-  margin-top: 6px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  margin-top: 8px;
+  background: var(--gold);
+  color: var(--deep);
+}
+
+.form-btn:hover {
+  background: var(--gold-soft);
+  color: var(--deep);
 }
 
 /* 장바구니 목록 */
@@ -382,29 +478,29 @@ h2,
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px dashed #f0e4d4;
-  font-size: 0.93rem;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.91rem;
 }
 
 .cart-empty {
-  color: #8a7361;
-  font-size: 0.88rem;
+  color: var(--muted);
+  font-size: 0.86rem;
   padding: 8px 0 12px;
 }
 
 .cart-total {
   font-weight: bold;
-  color: #6b4f3a;
+  color: var(--gold);
   text-align: right;
   margin-bottom: 14px;
 }
 
 /* 수량 ＋/－ 버튼 */
 .qty-btn {
-  border: 1px solid #e5d5c0;
-  background: #fff;
-  color: #6b4f3a;
+  border: 1px solid var(--line);
+  background: var(--surface-deep);
+  color: var(--text);
   border-radius: 6px;
   width: 26px;
   height: 26px;
@@ -413,91 +509,77 @@ h2,
 }
 
 .qty-btn:hover {
-  background: #fdf6ec;
-}
-
-/* 메뉴 카드의 "담기" 버튼 (JS가 자동으로 만들어 붙임) */
-.add-btn {
-  margin-top: 12px;
-  background: #fff;
-  border: 1px solid #c89b6d;
-  color: #6b4f3a;
-  padding: 6px 18px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.add-btn:hover {
-  background: #c89b6d;
-  color: #fff;
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 /* 접수 완료/오류 메시지 */
 .form-message {
   margin-top: 14px;
-  padding: 10px 14px;
+  padding: 11px 14px;
   border-radius: 8px;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
 }
 
 .form-message.success {
-  background: #eef7ee;
-  color: #2f6b3a;
+  background: rgba(110, 190, 130, 0.12);
+  color: #a5d8b0;
 }
 
 .form-message.error {
-  background: #fdeeee;
-  color: #a04040;
+  background: rgba(224, 110, 110, 0.12);
+  color: #e8a9a4;
 }
 
 /* ===== 오시는 길 ===== */
 .info-box {
   display: inline-block;
   text-align: left;
-  background: #fdf6ec;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 24px 32px;
+  padding: 26px 34px;
 }
 
 .info-box p {
   margin: 6px 0;
+  color: var(--text);
 }
 
 /* ===== 구글 지도 ===== */
 .map-wrap {
   max-width: 720px;
-  margin: 28px auto 0;
+  margin: 30px auto 0;
 }
 
 .map-wrap iframe {
   width: 100%;
   height: 360px;
-  border: 0;
+  border: 1px solid var(--line);
   border-radius: 14px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 /* ===== 푸터 ===== */
 .footer {
-  background: #6b4f3a;
-  color: #f3e3cf;
+  background: var(--deep);
+  color: var(--muted);
   text-align: center;
-  padding: 36px 24px;
-  font-size: 0.88rem;
+  padding: 44px 24px;
+  font-size: 0.87rem;
   line-height: 1.9;
+  border-top: 1px solid var(--line);
 }
 
 .footer-logo {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  color: var(--gold);
   margin-bottom: 6px;
 }
 
 .footer-copy {
-  margin-top: 12px;
-  font-size: 0.78rem;
-  opacity: 0.7;
+  margin-top: 14px;
+  font-size: 0.76rem;
+  opacity: 0.6;
 }
 
 /* ===== 맨 위로 버튼 ===== */
@@ -507,18 +589,17 @@ h2,
   bottom: 20px;
   width: 44px;
   height: 44px;
-  border: none;
+  border: 1px solid var(--gold);
   border-radius: 50%;
-  background: #6b4f3a;
-  color: #fff;
-  font-size: 1.2rem;
+  background: rgba(20, 24, 36, 0.9);
+  color: var(--gold);
+  font-size: 1.15rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   /* 평소엔 숨겨두고, 스크롤을 내리면 JS가 .show를 붙여 보여줌 */
   opacity: 0;
   pointer-events: none;
   transform: translateY(10px);
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s, background 0.2s;
   z-index: 90;
 }
 
@@ -529,7 +610,8 @@ h2,
 }
 
 #top-btn:hover {
-  background: #c89b6d;
+  background: var(--gold);
+  color: var(--deep);
 }
 
 /* ===== 스크롤 등장 애니메이션 ===== */
@@ -548,10 +630,15 @@ h2,
 
 /* "움직임 줄이기"를 켠 사용자에게는 애니메이션을 생략 (접근성) */
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .hero-eyebrow,
+  .hero h1,
+  .hero p,
+  .hero .btn {
     opacity: 1;
     transform: none;
     transition: none;
+    animation: none;
   }
 }
 
@@ -560,7 +647,7 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 3px solid #c89b6d;
+  outline: 3px solid var(--gold);
   outline-offset: 2px;
 }
 
@@ -584,8 +671,8 @@ select:focus-visible {
     width: 100%;
     flex-direction: column; /* 링크를 세로로 나열 */
     gap: 0;
-    background: #fffbf5;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background: rgba(20, 24, 36, 0.98);
+    border-bottom: 1px solid var(--line);
   }
 
   /* JS가 "open" 클래스를 붙이면 메뉴가 나타남 */
@@ -596,8 +683,8 @@ select:focus-visible {
   /* 손가락으로 누르기 편하게 링크를 크고 넓게 */
   .nav-links a {
     display: block;
-    padding: 14px 20px;
-    border-top: 1px solid #f0e4d4;
+    padding: 15px 24px;
+    border-top: 1px solid var(--line);
   }
 }
 
@@ -605,26 +692,31 @@ select:focus-visible {
 @media (max-width: 600px) {
   /* 첫 화면 글자를 화면에 맞게 줄이기 */
   .hero h1 {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
   }
 
   .hero p {
-    font-size: 1rem;
+    font-size: 0.98rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
   }
 
   /* 섹션 여백을 줄여서 스크롤 부담 줄이기 */
   .section {
-    padding: 56px 16px;
+    padding: 64px 16px;
   }
 
   .section h2 {
-    font-size: 1.6rem;
-    margin-bottom: 24px;
+    font-size: 1.65rem;
+    margin-bottom: 28px;
   }
 
   .menu-category {
-    font-size: 1.05rem;
-    margin: 28px 0 12px;
+    font-size: 1rem;
+    margin: 32px 0 14px;
   }
 
   /* 메뉴 카드를 한 줄에 2개씩 정렬 */
@@ -634,7 +726,7 @@ select:focus-visible {
   }
 
   .menu-card {
-    padding: 20px 12px;
+    padding: 22px 12px;
   }
 
   .menu-emoji {
@@ -652,7 +744,7 @@ select:focus-visible {
   /* 가게 정보 박스를 화면 폭에 맞춤 */
   .info-box {
     display: block;
-    padding: 20px 16px;
+    padding: 22px 18px;
     font-size: 0.9rem;
   }
 
